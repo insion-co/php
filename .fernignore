@@ -1,0 +1,13 @@
+.fernignore
+.gitignore
+.github/
+composer.json
+LICENSE.md
+phpunit.xml
+phpstan.neon
+
+vendor/
+composer.lock
+.phpunit.cache/
+.php-cs-fixer.cache
+**/.php-cs-fixer.cache
