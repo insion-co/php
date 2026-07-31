@@ -1,52 +1,77 @@
-name: ci
+name: CI
 
-on: [push]
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+permissions:
+  contents: read
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: false
+  cancel-in-progress: true
 
 jobs:
-  compile:
+  test:
+    name: PHP ${{ matrix.php-version }}
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        php-version:
+          - "8.1"
+          - "8.5"
 
     steps:
-      - name: Checkout repo
-        uses: actions/checkout@v4
+      - name: Check out repository
+        uses: actions/checkout@v6
 
-      - name: Setup PHP
+      - name: Set up PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: "8.3"
+          php-version: ${{ matrix.php-version }}
+          coverage: none
+          tools: composer:v2
 
-      - name: Install tools
-        run: |
-          composer install
+      - name: Validate package metadata
+        run: composer validate --strict --no-check-lock
 
-      - name: Build
-        run: |
-          composer build
+      - name: Install dependencies
+        run: composer install --no-interaction --prefer-dist
+
+      - name: Lint
+        run: composer lint
 
       - name: Analyze
-        run: |
-          composer analyze
+        if: matrix.php-version == '8.5'
+        run: composer analyze
 
-  test:
+      - name: Test
+        run: composer test
+
+  consumer:
+    name: Consumer installation
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repo
-        uses: actions/checkout@v4
+      - name: Check out repository
+        uses: actions/checkout@v6
 
-      - name: Setup PHP
+      - name: Set up PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: "8.3"
+          php-version: "8.5"
+          coverage: none
+          tools: composer:v2
 
-      - name: Install tools
+      - name: Install SDK in a clean project
+        shell: bash
         run: |
-          composer install
-
-      - name: Run Tests
-        run: |
-          composer test
+          consumer_dir="$(mktemp -d)"
+          cd "$consumer_dir"
+          composer init --name=insion/sdk-consumer --no-interaction
+          composer config repositories.insion path "$GITHUB_WORKSPACE"
+          composer require insion/insion:@dev guzzlehttp/guzzle:^7.4 --no-interaction --prefer-dist
+          php -r "require 'vendor/autoload.php'; exit(class_exists('Insion\\InsionClient') ? 0 : 1);"
