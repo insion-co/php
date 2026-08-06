@@ -29,10 +29,10 @@ class Record extends JsonSerializableType
     public ?string $clientUrl;
 
     /**
-     * @var string $name
+     * @var ?string $name Name or title of the record. Null when submitted using passthrough moderation.
      */
     #[JsonProperty('name')]
-    public string $name;
+    public ?string $name;
 
     /**
      * @var string $entity
@@ -98,13 +98,13 @@ class Record extends JsonSerializableType
      * @param array{
      *   id: string,
      *   clientId: string,
-     *   name: string,
      *   entity: string,
      *   protected: bool,
      *   createdAt: DateTime,
      *   updatedAt: DateTime,
      *   moderationPending: bool,
      *   clientUrl?: ?string,
+     *   name?: ?string,
      *   metadata?: ?array<string, mixed>,
      *   moderationStatus?: ?value-of<RecordModerationStatus>,
      *   moderationStatusCreatedAt?: ?DateTime,
@@ -118,7 +118,7 @@ class Record extends JsonSerializableType
         $this->id = $values['id'];
         $this->clientId = $values['clientId'];
         $this->clientUrl = $values['clientUrl'] ?? null;
-        $this->name = $values['name'];
+        $this->name = $values['name'] ?? null;
         $this->entity = $values['entity'];
         $this->protected = $values['protected'];
         $this->metadata = $values['metadata'] ?? null;

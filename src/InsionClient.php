@@ -63,7 +63,6 @@ class InsionClient
             'Authorization' => "Bearer $token",
             'X-Fern-Language' => 'PHP',
             'X-Fern-SDK-Name' => 'Insion',
-            'User-Agent' => 'insion/insion/1.0.1',
         ];
 
         $this->options = $options ?? [];

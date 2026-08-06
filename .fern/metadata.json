@@ -7,8 +7,7 @@
     "namespace": "Insion",
     "packageName": "insion/insion"
   },
-  "originGitCommit": "35704c1bf6b3c6e1fa3b33971a4753130557ef8e",
+  "originGitCommit": "b5b88b97d39d97d3d3df51cff3ea6b34d190bd74",
   "originGitCommitIsDirty": true,
-  "invokedBy": "manual",
-  "requestedVersion": "1.0.1"
+  "invokedBy": "manual"
 }
