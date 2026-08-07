@@ -80,6 +80,18 @@ class InsionClient
     /**
      * Create or update a record and return its moderation result immediately.
      *
+     * Example:
+     * ```php
+     * $client->moderateARecord(
+     *     new ModerateRequest([
+     *         'clientId' => 'clientId',
+     *         'name' => 'name',
+     *         'entity' => 'entity',
+     *         'content' => 'content',
+     *     ]),
+     * );
+     * ```
+     *
      * @param ModerateRequest $request
      * @param ?array{
      *   baseUrl?: string,
@@ -128,6 +140,18 @@ class InsionClient
 
     /**
      * Create or update a content record for asynchronous moderation. Results are delivered through webhook events when moderation is performed.
+     *
+     * Example:
+     * ```php
+     * $client->ingestARecord(
+     *     new RecordInput([
+     *         'clientId' => 'clientId',
+     *         'name' => 'name',
+     *         'entity' => 'entity',
+     *         'content' => 'content',
+     *     ]),
+     * );
+     * ```
      *
      * @param RecordInput $request
      * @param ?array{
@@ -178,6 +202,15 @@ class InsionClient
     /**
      * Remove a record from the moderation system by its client ID.
      *
+     * Example:
+     * ```php
+     * $client->deleteARecord(
+     *     new DeleteApiV1IngestRequest([
+     *         'clientId' => 'clientId',
+     *     ]),
+     * );
+     * ```
+     *
      * @param DeleteApiV1IngestRequest $request
      * @param ?array{
      *   baseUrl?: string,
@@ -227,6 +260,15 @@ class InsionClient
     /**
      * Create or update a user without ingesting a record.
      *
+     * Example:
+     * ```php
+     * $client->ingestAUser(
+     *     new UserInput([
+     *         'clientId' => 'clientId',
+     *     ]),
+     * );
+     * ```
+     *
      * @param UserInput $request
      * @param ?array{
      *   baseUrl?: string,
@@ -275,6 +317,13 @@ class InsionClient
 
     /**
      * List the records belonging to the authenticated organization.
+     *
+     * Example:
+     * ```php
+     * $client->listRecords(
+     *     new GetApiV1RecordsRequest([]),
+     * );
+     * ```
      *
      * @param GetApiV1RecordsRequest $request
      * @param ?array{
@@ -347,6 +396,13 @@ class InsionClient
     /**
      * Retrieve one record by its Insion record ID.
      *
+     * Example:
+     * ```php
+     * $client->retrieveARecord(
+     *     'recordId',
+     * );
+     * ```
+     *
      * @param string $recordId Insion record ID.
      * @param ?array{
      *   baseUrl?: string,
@@ -394,6 +450,13 @@ class InsionClient
 
     /**
      * List the users belonging to the authenticated organization.
+     *
+     * Example:
+     * ```php
+     * $client->listUsers(
+     *     new GetApiV1UsersRequest([]),
+     * );
+     * ```
      *
      * @param GetApiV1UsersRequest $request
      * @param ?array{
@@ -466,6 +529,13 @@ class InsionClient
     /**
      * Retrieve one user by its Insion user ID.
      *
+     * Example:
+     * ```php
+     * $client->retrieveAUser(
+     *     'userId',
+     * );
+     * ```
+     *
      * @param string $userId Insion user ID.
      * @param ?array{
      *   baseUrl?: string,
@@ -513,6 +583,16 @@ class InsionClient
 
     /**
      * Create an appeal for a suspended user. Appeals must be enabled for the organization.
+     *
+     * Example:
+     * ```php
+     * $client->createAnAppeal(
+     *     'userId',
+     *     new PostApiV1UsersUserIdCreateAppealRequest([
+     *         'text' => 'text',
+     *     ]),
+     * );
+     * ```
      *
      * @param string $userId Insion user ID.
      * @param PostApiV1UsersUserIdCreateAppealRequest $request

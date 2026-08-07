@@ -1,13 +1,18 @@
 {
   "cliVersion": "5.85.0",
   "generatorName": "fernapi/fern-php-sdk",
-  "generatorVersion": "2.13.2",
+  "generatorVersion": "2.15.0",
   "generatorConfig": {
     "clientName": "InsionClient",
     "namespace": "Insion",
-    "packageName": "insion/insion"
+    "packageName": "insion/insion",
+    "composerJson": {
+      "require": {
+        "guzzlehttp/guzzle": "^7.4"
+      }
+    }
   },
-  "originGitCommit": "b5b88b97d39d97d3d3df51cff3ea6b34d190bd74",
+  "originGitCommit": "ad06ca44295d44f207ba4a0d01ae102beac40a8c",
   "originGitCommitIsDirty": true,
   "invokedBy": "manual"
 }
